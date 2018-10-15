@@ -8,7 +8,7 @@ const Product = new Schema({
     createdAt: {type: Number, default: Date.now},
     updatedAt: {type: Number, default: Date.now},
     amount: {type: Number, required: true, default: 0},
-    picture: {type: String, required: true, default: '../img/mikasa-pilka.jpg'}
+    picture: {type: String, required: true, default: '/img/mikasa-pilka.jpg'}
 });
 
 export default mongoose.model('Product', Product);

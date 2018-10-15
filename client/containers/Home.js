@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import { ProductsList } from '../components/products';
+
 
 export default class Home extends Component {
     state = {
@@ -45,13 +47,7 @@ export default class Home extends Component {
 
         return (
             <div>
-                <ul>
-                    { products &&
-                    products.map(product => (
-                        <li>Name: {product.name}, Price: {product.price}</li>
-                    ))
-                    }
-                </ul>
+                <ProductsList products={products}/>
                 <form>
                     <input type="text" placeholder="item name" value={productName} onChange={this.changeProductName}/>
                     <input type="text" placeholder="item price" value={productPrice} onChange={this.changeProductPrice}/>
