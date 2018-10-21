@@ -46,14 +46,21 @@ export const Figcaption = styled.figcaption`
 export const Title = styled.h3`
   color: #fff;
 `
-export const StyledLink = styled(Link)`
+export const Button = styled.button`
+  border: 0;
+  outline: 0;
+  background: transparent;
   text-decoration: none;
   color: #fff;
   border-radius: 3px;
-  border: 1px solid #fff;
+   border: 1px solid #fff;
+ 
    transition: background linear .125s;
+ 
    &:hover {
     background: #fff;
     color: #1a1a1a;
   }
 `
+
+export const StyledLink = Button.withComponent(Link);
