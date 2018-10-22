@@ -2,6 +2,7 @@ import styled from 'styled-components';
 export const SliderContainer = styled.div`
   position: relative;
   height: 500px;
+  margin: 1rem 0;
 `
 export const SliderImage = styled.img`
   position: absolute;
