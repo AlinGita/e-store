@@ -38,7 +38,7 @@ class Product extends Component {
             return ( <h1>Loading...</h1> )
         if(!product)
             return ( <h1>Not found</h1> )
-        const pictures = [product.picture];
+        const pictures = product.pictures;
         
         return (
             <Wrapper>

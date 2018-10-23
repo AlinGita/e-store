@@ -7,12 +7,13 @@ export const Container = styled.div`
 `;
 
 export const ProductInfo = styled.div`
-  padding: 0 2rem;
+  padding-left: 2rem;
   color: #555555;
 `;
 
 export const Name = styled.h4`
   color: #1a1a1a;
+  margin-bottom: 2rem;
 `;
 
 export const Purchase = styled.div`
