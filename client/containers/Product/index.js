@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchProduct } from '../../actions/productsActions';
+import { fetchProduct } from 'actions/productsActions';
 import { withRouter } from 'react-router-dom';
 
-import { Wrapper, Spacer } from '../../components/layout';
+import Spacer from 'blocks/Spacer';
+import Wrapper from 'blocks/Wrapper';
 import {
     Container,
     ProductInfo,
@@ -15,7 +16,7 @@ import {
     Info
 } from './styles';
 
-import PicturePreview from '../../components/picture-preview';
+import PicturePreview from 'components/picture-preview';
 
 class Product extends Component {
     componentDidMount() {

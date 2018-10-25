@@ -5,7 +5,7 @@ import Product from './Product';
 import { Grid, Button } from "./styles";
 
 import { connect } from 'react-redux';
-import { addProduct} from "../../actions/shoppingCart";
+import { addProduct} from "actions/shoppingCart";
 
 class ProductsList extends Component {
     render() {

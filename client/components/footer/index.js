@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Wrapper } from '../layout';
+import Wrapper from 'blocks/Wrapper';
 import {
     FooterStyled,
     Section,

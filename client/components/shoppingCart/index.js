@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeProduct, openShoppingCart } from '../../actions/shoppingCart';
+import { removeProduct, openShoppingCart } from 'actions/shoppingCart';
 import {
     Aside,
     Products, Product,
@@ -12,14 +12,13 @@ import {
     Purchase,
     PurchaseButton,
     PurchasePrice
-} from '../../containers/Product/styles';
+} from 'containers/Product/styles';
 class ShoppingCart extends Component {
     clickedOutside = e => {
         this.props.openShoppingCart(false);
-    }
+    };
     render() {
         debugger;
-        console.log(this.props)
         const { cart } = this.props;
 
         const products = Object.values(cart.products);

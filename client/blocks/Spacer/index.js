@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  width: 83.3333%;
-  max-width: 1440px;
-  margin: 0 auto;
-`
-
-export const Spacer = styled.div`
+const Spacer = styled.div`
   position: relative;
   text-align: center;
    margin-top: 2rem;
@@ -34,3 +28,5 @@ export const Spacer = styled.div`
     right: 0;
   }
 `
+
+export default Spacer;

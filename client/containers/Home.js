@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts, createProduct } from '../actions/productsActions';
-import { ProductsList } from '../components/products';
+import { fetchProducts, createProduct } from 'actions/productsActions';
+import { ProductsList } from 'components/products';
 
-import Slider from '../components/slider';
-import { Wrapper } from '../components/layout';
+import Slider from 'components/slider';
+import Wrapper from 'blocks/Wrapper';
 
 
 class Home extends Component {

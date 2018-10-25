@@ -1,4 +1,4 @@
-import * as TYPES from '../actions/constants/shoppingCartConstants';
+import * as TYPES from 'actions/constants/shoppingCartConstants';
 import { omit } from 'lodash';
 
 const initial_state = {
