@@ -3,7 +3,8 @@ import { omit } from 'lodash';
 
 const initial_state = {
     products: {},
-    errors: {}
+    errors: {},
+    closed: true,
 };
 
 export default function reducer(state = initial_state, action) {
@@ -24,6 +25,10 @@ export default function reducer(state = initial_state, action) {
         }
         case TYPES.CLEAR_SHOPPING_CART: {
             state = Object.assign({}, initial_state);
+            break;
+        }
+        case TYPES.OPEN_SHOPPING_CART: {
+            state = { ...state, closed: !action.payload };
             break;
         }
         default: {}

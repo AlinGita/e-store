@@ -29,7 +29,7 @@ export default class Footer extends Component {
                     </Section>
                     <Section>
                         <h4>CONTACT</h4>
-                        <p>If you have any questions or inquiries about our products, please send us an email at <a href="#">hello@fuckinggooddesign.com</a>. We'd love to hear from you.</p>
+                        <p>If you have any questions or inquiries about our products, please send us an email at <a href="#">hello@world.com</a>. We'd love to hear from you.</p>
                     </Section>
                 </FooterStyled>
             </Wrapper>

@@ -11,3 +11,7 @@ export const removeProduct = (productId) => ({
 export const clearShoppingCart = () => ({
     type: TYPES.CLEAR_SHOPPING_CART
 });
+export const openShoppingCart = (open) => ({
+    type: TYPES.OPEN_SHOPPING_CART,
+    payload: open
+});

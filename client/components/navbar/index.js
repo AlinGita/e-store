@@ -6,7 +6,11 @@ import {
     Header,
     Navigation,
 } from './styles';
-export default class Navbar extends Component {
+
+import { openShoppingCart } from '../../actions/shoppingCart';
+import { connect } from 'react-redux';
+
+class Navbar extends Component {
     render() {
         return (
             <Header>
@@ -22,8 +26,11 @@ export default class Navbar extends Component {
                             <li><Link to="/contact">Contact</Link></li>
                         </ul>
                     </Navigation>
+                    <button onClick={() => this.props.openShoppingCart(true)}>Toggle shopping cart</button>
                 </Wrapper>
             </Header>
         )
     }
 }
+
+export default connect(null, { openShoppingCart })(Navbar);

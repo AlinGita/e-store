@@ -13,6 +13,7 @@ import Product from './containers/Product';
 
 import Navbar from './components/navbar';
 import Footer from './components/footer';
+import ShoppingCart from './components/shoppingCart';
 
 export default () => {
     return (
@@ -26,6 +27,7 @@ export default () => {
                     <Route path="/products/:id" component={Product}/>
                 </Switch>
                 <Footer/>
+                <ShoppingCart/>
             </main>
         </Router>
     )
