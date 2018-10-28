@@ -7,9 +7,9 @@ const Product = new Schema({
     description: {type: String, required: true, default: ''},
     createdAt: {type: Number, default: Date.now},
     updatedAt: {type: Number, default: Date.now},
-    amount: {type: Number, required: true, default: 0},
     pictures: {type: Array, required: true, default: ['/img/mikasa-pilka.jpg']},
-    features: {type: Array, default: []}
+    features: {type: Array, default: []},
+    category: { type: Schema.Types.ObjectId, required: true, ref: 'Category'}
 });
 
 export default mongoose.model('Product', Product);

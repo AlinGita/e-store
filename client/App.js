@@ -27,7 +27,7 @@ const Client = () => (
             <Route path="/products/:id" component={Product}/>
         </Switch>
         <Footer/>
-        <Basket/>
+        <ShoppingCart/>
     </React.Fragment>
 );
 const Admin = (props) => (
