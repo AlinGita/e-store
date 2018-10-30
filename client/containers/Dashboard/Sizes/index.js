@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { mapKeys } from 'lodash';
+import { connect } from 'react-redux';
+import {
+    fetchSizes,
+    createSize,
+    updateSize,
+    deleteSize
+} from 'actions/sizesActions';
 import SizeEditor from './SizeEditor';
 import Expander from 'components/Expander';
 
-export default class Sizes extends Component {
+class Sizes extends Component {
 
     state = {
         name: '',
         short: '',
-        sizes: {}
     }
     componentDidMount = async () => {
-        const res = await axios.get('/api/sizes');
-        const sizes = res.data;
-        this.setState({ sizes: mapKeys(sizes, '_id') });
+        this.props.fetchSizes();
     }
     changeName = e => {
         this.setState({ name: e.target.value })
@@ -23,20 +25,17 @@ export default class Sizes extends Component {
         this.setState({ short: e.target.value });
     }
     submitSize = async (e) => {
-        const { name, short } = this.state;
         e.preventDefault();
-        const res = await axios.post('/api/sizes', { name, short });
-        const size = res.data;
-        this.setState({ sizes: { ...this.state.sizes, [size._id]: size }});
+        const { name, short } = this.state;
+        this.props.createSize({ name, short });
     }
     changeSize = async (id, name, short) => {
-        const res = await axios.put(`/api/sizes/${id}`, { name, short });
-        const size = res.data;
-        this.setState({ sizes: { ...this.state.sizes, [size._id]: size }});
+        this.props.updateSize(id, { name, short });
     }
 
     render() {
-        const { name, short, sizes } = this.state;
+        const { name, short } = this.state;
+        const { sizes } = this.props.sizes;
 
         return (
             <div>
@@ -52,7 +51,10 @@ export default class Sizes extends Component {
                                 <Expander
                                     head={(<h1>Name: {size.name}, Short: {size.short}</h1>)}
                                     body={(
-                                        <SizeEditor name={size.name} short={size.short} onSubmit={(name, short) => this.changeSize(size._id, name, short)}/>
+                                        <div>
+                                            <SizeEditor name={size.name} short={size.short} onSubmit={(name, short) => this.changeSize(size._id, name, short)}/>
+                                            <button onClick={() => this.props.deleteSize(size._id)}>Delete size</button>
+                                        </div>
                                     )}
                                 />
                             </li>
@@ -63,3 +65,8 @@ export default class Sizes extends Component {
         )
     }
 }
+
+const mapStateToProps = ({ sizes }) => ({ sizes });
+export default connect(mapStateToProps, {
+    fetchSizes, createSize, updateSize, deleteSize
+})(Sizes);
