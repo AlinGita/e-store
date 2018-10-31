@@ -9,7 +9,8 @@ const Product = new Schema({
     updatedAt: {type: Number, default: Date.now},
     pictures: {type: Array, required: true, default: ['/img/mikasa-pilka.jpg']},
     features: {type: Array, default: []},
-    category: { type: Schema.Types.ObjectId, required: true, ref: 'Category'}
+    category: { type: Schema.Types.ObjectId, required: true, ref: 'Category'},
+    availability: [{ type: Schema.Types.ObjectId, required: true, ref: 'AvailableProduct'}]
 });
 
 export default mongoose.model('Product', Product);
