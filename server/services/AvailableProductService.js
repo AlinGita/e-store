@@ -4,17 +4,21 @@ class AvailableProductService {
     }
     getAvailableProducts = async (filter = {}, select = {}) => {
         return this.AvailableProduct.find(filter, select);
-    }
-    getAvailableProductById = async (productId) => {
-        return this.AvailableProduct.findById(productId);
-    }
+    };
+    getAvailableProductById = async (availabilityId) => {
+        return this.AvailableProduct.findById(availabilityId);
+    };
     saveAvailableProduct = async (product) => {
         await product.save();
         return product;
-    }
-    deleteAvailableProduct = async (productId) => {
-        return this.AvailableProduct.deleteOne({ _id: productId });
-    }
+    };
+    deleteAvailableProduct = async (availabilityId) => {
+        return this.AvailableProduct.deleteOne({ _id: availabilityId });
+    };
+    deleteAvailableProducts = async (productId) => {
+        return this.AvailableProduct.deleteMany({ product: productId });
+    };
+
 }
 
 export default AvailableProductService;

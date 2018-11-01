@@ -1,7 +1,7 @@
 class ProductService {
     constructor(Product) {
         this.Product = Product;
-    }
+    };
 
     getProducts = async () => {
         return this.Product.find({}).populate('availability', 'size amount -_id');
@@ -22,6 +22,14 @@ class ProductService {
 
     deleteAvailability = async (productId, availabilityId) => {
         return this.Product.findOneAndUpdate({ _id: productId }, { $pull: { availability: availabilityId }});
+    };
+
+    updateProduct = async (productId, product) => {
+        return this.Product.findOneAndUpdate({ _id: productId }, { $set: { ...product }}, { new: true });
+    };
+
+    deleteProduct = async (productId) => {
+        return this.Product.deleteOne({ _id: productId });
     };
 }
 
