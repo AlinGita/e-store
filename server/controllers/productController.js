@@ -1,12 +1,21 @@
 import express from 'express';
 import Product from '../models/ProductModel';
 import { productService, availableProductService } from '../services';
+import { pickBy, identity } from 'lodash';
 
 const router = express.Router();
 
 router.get('/', async(req, res) => {
-    const products = await productService.getProducts();
-    res.status(200).json(products);
+    const filter = pickBy(req.query, identity);
+    const products = await productService.getProducts(filter);
+    if(filter.size) {
+        const filtered = products.filter(product => {
+            return product.availability.find(availability => availability.size === filter.size);
+        })
+        res.status(200).json(filtered);
+    } else {
+        res.status(200).json(products);
+    }
 });
 
 router.get('/:id', async(req, res) => {
