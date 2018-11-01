@@ -22,7 +22,7 @@ export const receiveProducts = (products) => ({
     type: TYPES.RECEIVE_PRODUCTS,
     payload: products
 });
-// Fetching single product
+
 export const fetchProduct = (id) => {
     return async dispatch => {
         dispatch(requestProduct(id));
@@ -39,7 +39,7 @@ export const receiveProduct = (product) => ({
     type: TYPES.RECEIVE_PRODUCT,
     payload: product
 });
-// Creating product
+
 export const createProduct = (data) => {
     return async dispatch => {
         const res = await axios.post('/api/products', data);
@@ -47,3 +47,25 @@ export const createProduct = (data) => {
         dispatch(receiveProduct(product));
     }
 };
+
+export const updateProduct = (id, data) => {
+    return async dispatch => {
+        const res = await axios.put(`/api/products/${id}`, data);
+        const product = res.data;
+        dispatch(receiveProduct(product));
+    }
+};
+
+export const deleteProduct = (id) => {
+    return async dispatch => {
+        const res = await axios.delete(`/api/products/${id}`);
+        const deleted = res.data;
+        if(deleted.n === 1 && deleted.ok === 1)
+            dispatch(deletedProduct(id));
+    }
+};
+
+export const deletedProduct = (id) => ({
+    type: TYPES.DELETE_PRODUCT,
+    payload: id
+});
