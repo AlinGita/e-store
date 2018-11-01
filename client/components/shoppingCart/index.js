@@ -26,7 +26,7 @@ class ShoppingCart extends Component {
         return (
             <Aside closed={cart.closed}>
                 <OutsideClickHandler closed={cart.closed} onClick={this.clickedOutside}/>
-                <CloseButton onClick={() => this.props.openShoppingCart(false)}><i class="fas fa-times"></i></CloseButton>
+                <CloseButton onClick={() => this.props.openShoppingCart(false)}><i className="fas fa-times"></i></CloseButton>
                 <Title>Your Items</Title>
                 { products.length === 0 &&
                 <Title disabled>Your shopping cart is empty</Title>
@@ -45,11 +45,11 @@ class ShoppingCart extends Component {
                         <tbody>
                         {
                             products.map(product => (
-                                <Product>
+                                <Product key={product._id}>
                                     <td>
                                         <button
                                             onClick={() => this.props.removeProduct(product._id)}>
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i className="fas fa-trash-alt"></i>
                                         </button>
                                     </td>
                                     <td><img src={product.pictures[0]} alt={product.name}/></td>

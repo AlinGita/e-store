@@ -26,5 +26,6 @@ export default {
             utils: path.resolve('client/utils')
         },
         extensions: ['.js']
-    }
+    },
+    mode: 'development'
 }
