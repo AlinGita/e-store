@@ -18,7 +18,7 @@ class ShoppingCart extends Component {
         this.props.openShoppingCart(false);
     };
     render() {
-        debugger;
+
         const { cart } = this.props;
 
         const products = Object.values(cart.products);
