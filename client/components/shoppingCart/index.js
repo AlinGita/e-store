@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeProduct, openShoppingCart } from 'actions/shoppingCart';
+import { removeProduct, openShoppingCart, changeProductAmount } from 'actions/shoppingCart';
 import {
     Aside,
     Products, Product,
     OutsideClickHandler,
     Title,
-    CloseButton
+    CloseButton,
+    Scrollable,
 } from './styles';
+
 import {
     Purchase,
     PurchaseButton,
     PurchasePrice
 } from 'containers/Product/styles';
+
+import NumericInput from 'components/NumericInput';
+
 class ShoppingCart extends Component {
     clickedOutside = e => {
         this.props.openShoppingCart(false);
     };
-    render() {
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.cart.closed !== this.props.cart.closed) {
+            document.body.style.overflow = this.props.cart.closed ? '' : 'hidden';
+        }
+    }
+
+    render() {
+        console.log(this.props)
         const { cart } = this.props;
 
         const products = Object.values(cart.products);
@@ -31,6 +43,7 @@ class ShoppingCart extends Component {
                 { products.length === 0 &&
                 <Title disabled>Your shopping cart is empty</Title>
                 }
+                <Scrollable>
                 { products.length > 0 &&
                 <React.Fragment>
                     <Products>
@@ -54,10 +67,12 @@ class ShoppingCart extends Component {
                                     </td>
                                     <td><img src={product.pictures[0]} alt={product.name}/></td>
                                     <td>
-                                        <span>{product.name}</span>
+                                        <span>{product.name} (Size: {product.size.short})</span>
                                         <span>{product.description}</span>
                                     </td>
-                                    <td><input type="text"/></td>
+                                    <td>
+                                        <NumericInput value={product.amount} onChange={(value) => this.props.changeProductAmount(product._id, value)}/>
+                                    </td>
                                     <td>&euro; {product.price}</td>
                                 </Product>
                             ))
@@ -66,13 +81,14 @@ class ShoppingCart extends Component {
                     </Products>
                     <Purchase>
                         <PurchaseButton>CHECKOUT</PurchaseButton>
-                        <PurchasePrice>&euro; {products.map(product => product.price).reduce((a, b) => a + b, 0)}</PurchasePrice>
+                        <PurchasePrice>&euro; {products.reduce((accumulator, product) => accumulator + (product.price * product.amount), 0)}</PurchasePrice>
                     </Purchase>
                 </React.Fragment>
                 }
+                </Scrollable>
             </Aside>
         )
     }
 }
 const mapStateToProps = ({ cart }) => ({ cart });
-export default connect(mapStateToProps, { removeProduct, openShoppingCart })(ShoppingCart);
+export default connect(mapStateToProps, { removeProduct, openShoppingCart, changeProductAmount })(ShoppingCart);
