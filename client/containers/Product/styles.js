@@ -1,14 +1,22 @@
 import styled from 'styled-components';
+import { media } from 'utils/style-utils';
 
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  ${media.mobile`
+    grid-template-columns: 1fr;
+  `}
 `;
 
 export const ProductInfo = styled.div`
   padding-left: 2rem;
   color: #555555;
+  ${media.mobile`
+    padding-left: 0;
+  `}
 `;
 
 export const Name = styled.h4`

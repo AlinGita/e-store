@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { pick, pickBy, identity } from 'lodash';
 import styled from 'styled-components';
+import { media } from 'utils/style-utils';
 import qs from 'querystring';
 
 import Spacer from 'blocks/Spacer';
@@ -10,7 +11,7 @@ import Wrapper from 'blocks/Wrapper';
 import Filters from 'blocks/Filters';
 
 import { ProductsList } from 'components/products';
-import Paginator from 'components/products:'
+import Paginator from 'components/Paginator';
 
 import { fetchCategories } from 'actions/categoriesActions';
 import { fetchProducts } from 'actions/productsActions';
@@ -20,12 +21,22 @@ import { fetchSizes } from 'actions/sizesActions';
 const Layout = styled.div`
   display: grid;
   grid-template-columns: 300px auto;
+  grid-row-gap: 1rem;
+   ${media.mobile`
+    grid-template-columns: 1fr;
+  `}
 `
-
 Layout.Left = styled.div`
+  margin-right: 1rem;
+  ${media.mobile`
+    margin-right: 0;
+  `}
 `
-
 Layout.Right = styled.div`
+  margin-left: 1rem;
+  ${media.mobile`
+    margin-left: 0;
+  `}
 `
 
 const Sorting = styled.div`
@@ -100,7 +111,6 @@ class Products extends Component {
 
         return (
             <Wrapper>
-                <code><pre>{JSON.stringify(this.state, null, 2)}</pre></code>
                 <Spacer>&#10699;</Spacer>
                 <Layout>
                     <Layout.Left>
@@ -138,7 +148,7 @@ class Products extends Component {
                                     </select>
                                 </Filters.Section.Body>
                             </Filters.Section>
-                            <Filters.Submit type="submit" onClick={this.onFilter}>Filter</Filters.Submit>
+                            <Filters.Submit type="submit" onClick={this.onFilter}><i className="fas fa-filter"></i> Filter</Filters.Submit>
                         </Filters>
                     </Layout.Left>
                     <Layout.Right>
