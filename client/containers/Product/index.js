@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchProduct } from 'actions/productsActions';
+import { addProduct } from 'actions/shoppingCart';
 import { withRouter } from 'react-router-dom';
 
 import Spacer from 'blocks/Spacer';
@@ -13,7 +14,6 @@ import {
     PurchaseButton, PurchasePrice,
     Description,
     Features,
-    Info
 } from './styles';
 
 import PicturePreview from 'components/picture-preview';
@@ -49,20 +49,20 @@ class Product extends Component {
                     <ProductInfo>
                         <Name>{product.name}</Name>
                         <Purchase>
-                            <PurchaseButton>BUY</PurchaseButton>
+                            <PurchaseButton onClick={() => this.props.addProduct(product)}>BUY</PurchaseButton>
                             <PurchasePrice>&euro; {product.price}</PurchasePrice>
                         </Purchase>
-                        <Description>Small backpack ideal for everyday carry. Available in various colours.</Description>
+                        <Description>{product.description}</Description>
                         <Features>
                             <h4>Features and materials</h4>
                             <ul>
-                                <li>Item</li>
-                                <li>Other item</li>
+                                {
+                                    product.features.map((feature, index) => (
+                                        <li key={index}>{feature}</li>
+                                    ))
+                                }
                             </ul>
                         </Features>
-                        <Info>Our products are made to order. Please allow 2-3 weeks for shipment. You need it fast? Let
-                            us know!
-                        </Info>
                     </ProductInfo>
                 </Container>
             </Wrapper>
@@ -70,4 +70,4 @@ class Product extends Component {
     }
 }
 const mapStateToProps = ({ products }) => ({ products });
-export default withRouter(connect(mapStateToProps, { fetchProduct })(Product));
+export default withRouter(connect(mapStateToProps, { fetchProduct, addProduct })(Product));

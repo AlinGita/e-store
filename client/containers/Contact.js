@@ -14,9 +14,9 @@ export default class About extends Component {
                 <Spacer>&#10699;</Spacer>
                 <Title>CONTACT US</Title>
                 <Description>
-                    <p>This shit is a streetwear brand founded by Mariusz Baran in 2018. All this shit products are handmade in Barcelona using the finest materials and fabrics.</p>
-                    <p>If you have any questions or inquiries about our products, please send us an email at <a href="#">hello@fuckinggooddesign.com</a> We'd love to hear from you!</p>
-                    <p>If you´re a blogger or journalist and would like to know more about our brand or products, please contact us at <a href="#">press@adablackjackgoods.com</a>.</p>
+                    <p>This is a streetwear brand founded by Wojciech Dybikowski in 2018.</p>
+                    <p>If you have any questions or inquiries about our products, please send us an email at <a href="#">hello@world.com</a> We'd love to hear from you!</p>
+                    <p>If you´re a blogger or journalist and would like to know more about our brand or products, please contact us at <a href="#">press@sitemail.com</a>.</p>
                 </Description>
             </Wrapper>
         )

@@ -39,8 +39,6 @@ Layout.Right = styled.div`
   `}
 `
 
-const Sorting = styled.div`
-`
 
 class Products extends Component {
     state = {
@@ -152,16 +150,6 @@ class Products extends Component {
                         </Filters>
                     </Layout.Left>
                     <Layout.Right>
-                        <Sorting>
-                            <select>
-                                <option>Creation date</option>
-                                <option>Price</option>
-                            </select>
-                            <select>
-                                <option>Descending</option>
-                                <option>Ascending</option>
-                            </select>
-                        </Sorting>
                         <ProductsList products={Object.values(products.products)}/>
                         <div>
                             {

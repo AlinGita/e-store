@@ -61,8 +61,3 @@ export const Features = styled.div`
     list-style-type: none;
   }
 `;
-
-export const Info = styled.p`
-  margin-top: 1rem;
-  line-height: 1.5;
-`;
