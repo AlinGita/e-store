@@ -19,13 +19,11 @@ import {
 
 mongoose.connect('mongodb://127.0.0.1:27017/store', {useNewUrlParser: true});
 
-// Configuration
 app.disable('x-powered-by');
 app.set('port', process.env.PORT || 3000);
 app.set('json spaces', 2);
 
 
-// Middleware
 app.use(webpackMiddleware(webpack(webpackConfig)));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
@@ -34,20 +32,23 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-// Route
 app.use('/api/products', productController);
 app.use('/api/categories', categoryController);
 app.use('/api/sizes', sizeController);
 app.use('/api/available', availableProductController);
 
 
-// Main
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
+app.use((err, req, res, next) => {
+    const result = { error: err.message }
+    if(app.get('env') === 'production')
+        result.error = 'Unable to handle the request';
+    res.status(500).json(result);
+});
 
-// Export app
 app.listen(
     app.get('port'),
     () => console.log(`Running on localhost:${app.get('port')}`)
