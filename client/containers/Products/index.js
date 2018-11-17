@@ -1,63 +1,106 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { pick, pickBy, identity } from 'lodash';
 import styled from 'styled-components';
+import qs from 'querystring';
+
 import Spacer from 'blocks/Spacer';
 import Wrapper from 'blocks/Wrapper';
 import Filters from 'blocks/Filters';
+
 import { ProductsList } from 'components/products';
+import Paginator from 'components/products:'
+
 import { fetchCategories } from 'actions/categoriesActions';
 import { fetchProducts } from 'actions/productsActions';
 import { fetchSizes } from 'actions/sizesActions';
+
 
 const Layout = styled.div`
   display: grid;
   grid-template-columns: 300px auto;
 `
+
 Layout.Left = styled.div`
-
 `
-Layout.Right = styled.div`
 
+Layout.Right = styled.div`
 `
 
 const Sorting = styled.div`
-
- `
+`
 
 class Products extends Component {
     state = {
         category: '',
         size: '',
         priceFrom: '',
-        priceTo: ''
+        priceTo: '',
+        productsOnPage: 3
     };
+
     componentDidMount() {
         this.props.fetchCategories();
-        this.props.fetchProducts();
         this.props.fetchSizes();
+        this.fetchProducts();
     }
-    changeCategory  = e => { this.setState({ category: e.target.value }) };
-    changeSize      = e => { this.setState({ size: e.target.value }) };
-    changePriceFrom = e => { this.setState({ priceFrom: e.target.value }) };
-    changePriceTo   = e => { this.setState({ priceTo: e.target.value }) };
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.location.search !== this.props.location.search)
+            this.fetchProducts();
+    }
+
+    fetchProducts() {
+        const { productsOnPage } = this.state;
+        const search = qs.parse(this.props.location.search.slice(1));
+        const query = pick(search, ['category', 'size', 'priceFrom', 'priceTo']);
+        const page = search.page ? parseInt(search.page) : 0;
+
+        this.props.fetchProducts({
+            limit: productsOnPage,
+            skip: page * productsOnPage,
+            ...query
+        })
+    }
+
+    changeCategory  = e => { this.setState({ category: e.target.value }) }
+    changeSize      = e => { this.setState({ size: e.target.value }) }
+    changePriceFrom = e => { this.setState({ priceFrom: e.target.value }) }
+    changePriceTo   = e => { this.setState({ priceTo: e.target.value }) }
+
     onFilter = e => {
         e.preventDefault();
-        const { category, size, priceFrom, priceTo } = this.state;
-        this.props.fetchProducts({
-            limit: 15,
-            skip: 0,
-            category,
-            size,
-            priceFrom,
-            priceTo
-        });
+
+        const options = {
+            category: this.state.category,
+            size: this.state.size,
+            priceFrom: this.state.priceFrom,
+            priceTo: this.state.priceTo,
+        };
+
+        const query = qs.stringify(pickBy(options, identity));
+        this.props.history.push(`/products?${query}`)
+    };
+
+    navigateToPage = index => {
+        const qr = qs.parse(this.props.location.search.slice(1));
+        qr.page = index;
+        const query = qs.stringify(qr);
+        this.props.history.push(`/products?${query}`);
     };
 
     render() {
-        const { category, size, priceFrom, priceTo } = this.state;
+        const { priceFrom, priceTo, productsOnPage } = this.state;
         const { categories, products, sizes } = this.props;
+
+        const query = qs.parse(this.props.location.search.slice(1));
+        const current = query.page ? Number(query.page) : 0;
+        const pages = products.total / productsOnPage;
+
         return (
             <Wrapper>
+                <code><pre>{JSON.stringify(this.state, null, 2)}</pre></code>
                 <Spacer>&#10699;</Spacer>
                 <Layout>
                     <Layout.Left>
@@ -110,16 +153,23 @@ class Products extends Component {
                             </select>
                         </Sorting>
                         <ProductsList products={Object.values(products.products)}/>
-                        <h2>Pagination</h2>
+                        <div>
+                            {
+                                <Paginator pages={pages} current={current} onItemClicked={(index) => this.navigateToPage(index)}/>
+                            }
+                        </div>
                     </Layout.Right>
                 </Layout>
             </Wrapper>
         )
     }
 }
-const mapStateToProps = ({ categories, products, sizes }) => ({ categories, products, sizes });
 
-export default connect(
+const mapStateToProps =
+    ({ categories, products, sizes }) =>
+        ({ categories, products, sizes });
+
+export default withRouter(connect(
     mapStateToProps,
     { fetchCategories, fetchProducts, fetchSizes }
-)(Products);
+)(Products));
