@@ -20,7 +20,7 @@ import {
 import NumericInput from 'components/NumericInput';
 
 import styled from 'styled-components';
-const PurchaseLink = PurchaseButton.withComponent(Link).extend`
+const PurchaseLink = styled(PurchaseButton.withComponent(Link))`
   display: flex;
   text-decoration: none;
   justify-content: center;

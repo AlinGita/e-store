@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Spacer from 'blocks/Spacer';
 import { Products, Product } from 'components/shoppingCart/styles.js';
 import NumericInput from 'components/NumericInput';
-import { removeProduct, changeProductAmount } from 'actions/basketActions';
+import { removeProduct, changeProductAmount } from 'actions/shoppingCart';
 import Wrapper from 'blocks/Wrapper';
 const Delivery = styled.ul`
   list-style-type: none;
@@ -83,7 +83,7 @@ class Checkout extends Component {
     }
     validate = () => {
         const { state } = this;
-        if(Object.values(this.props.basket.products).length === 0) return false; // No products
+        if(Object.values(this.props.cart.products).length === 0) return false; // No products
         if(state.payment.selected === undefined) return false; // No payment method
         if(state.delivery.selected === undefined) return false; // No delivery
         if(!this.checkAddress(state.address)) return false; // Bad address
@@ -107,7 +107,7 @@ class Checkout extends Component {
             canProceedToCheckout
         } = this.state;
         const price = {
-            products: Object.values(this.props.basket.products).reduce((a, item) => a + (item.price * item.amount), 0),
+            products: Object.values(this.props.cart.products).reduce((a, item) => a + (item.price * item.amount), 0),
             payment: payment.selected !== undefined ? payment.options[payment.selected].price : 0,
             delivery: delivery.selected !== undefined ? delivery.options[delivery.selected].price : 0
         }
@@ -125,7 +125,7 @@ class Checkout extends Component {
                     </thead>
                     <tbody>
                     {
-                        Object.values(this.props.basket.products).map(product => (
+                        Object.values(this.props.cart.products).map(product => (
                             <Product key={product._id}>
                                 <td>
                                     <button
@@ -236,5 +236,5 @@ class Checkout extends Component {
         )
     }
 }
-const mapStateToProps = ({ basket }) => ({ basket });
+const mapStateToProps = ({ cart }) => ({ cart });
 export default connect(mapStateToProps, { removeProduct, changeProductAmount })(Checkout);
