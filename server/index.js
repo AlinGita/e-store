@@ -1,4 +1,3 @@
-// Module dependencies
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
@@ -15,6 +14,8 @@ import {
     categoryController,
     sizeController,
     availableProductController,
+    paymentController,
+    deliveryController
 } from './controllers';
 
 mongoose.connect('mongodb://127.0.0.1:27017/store', {useNewUrlParser: true});
@@ -36,6 +37,8 @@ app.use('/api/products', productController);
 app.use('/api/categories', categoryController);
 app.use('/api/sizes', sizeController);
 app.use('/api/available', availableProductController);
+app.use('/api/payments', paymentController);
+app.use('/api/deliveries', deliveryController);
 
 
 app.get('*', (req, res) => {
