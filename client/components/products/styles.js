@@ -62,14 +62,14 @@ export const Title = styled.div`
   text-align: center;
 `
 
-export const TitleName = styled.h3`
+export const TitleName = styled.h2`
   text-decoration: underline;
   font-weight: 400;
   margin-bottom: 1rem;
   line-height: 1.5;
   letter-spacing: .1em;
 `
-export const TitlePrice = styled.h3`
+export const TitlePrice = styled.h2`
   font-weight: 400;
 `
 
@@ -81,7 +81,7 @@ export const Button = styled.button`
   color: #fff;
    border: 1px solid #fff;
    font-size: 1em;
-  padding: .5em 1em;
+  padding: .7em 1.4em;
  
    transition: background linear .125s;
  

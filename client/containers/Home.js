@@ -23,6 +23,7 @@ class Home extends Component {
 
     render() {
         const { products } = this.props;
+
         const { images } = this.state;
 
         return (
