@@ -21,22 +21,15 @@ import { fetchSizes } from 'actions/sizesActions';
 const Layout = styled.div`
   display: grid;
   grid-template-columns: 300px auto;
+  grid-column-gap: 2rem;
   grid-row-gap: 1rem;
    ${media.mobile`
     grid-template-columns: 1fr;
   `}
 `
 Layout.Left = styled.div`
-  margin-right: 1rem;
-  ${media.mobile`
-    margin-right: 0;
-  `}
 `
 Layout.Right = styled.div`
-  margin-left: 1rem;
-  ${media.mobile`
-    margin-left: 0;
-  `}
 `
 
 

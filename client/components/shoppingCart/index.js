@@ -30,7 +30,6 @@ class ShoppingCart extends Component {
     }
 
     render() {
-        console.log(this.props)
         const { cart } = this.props;
 
         const products = Object.values(cart.products);

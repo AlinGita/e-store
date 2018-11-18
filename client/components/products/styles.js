@@ -3,26 +3,32 @@ import { media } from 'utils/style-utils';
 import styled from 'styled-components';
 
 
-export const Grid = styled.ul`
+export const Products = styled.ul`
   list-style-type: none;
   display: grid;
-  grid-template-columns: repeat(${props => props.columns ? props.columns : 1}, 1fr);
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
   
   ${media.mobile`
 
     grid-template-columns: 1fr;
   `}
 `
+export const ProductItem = styled.li`
+  height: 400px;
+  position: relative;
+  width: 100%;
+`
 export const Figure = styled.figure`
-  position: relative;  
+  height: 100%; 
   width: 100%;
    &:hover figcaption {
     opacity: 1;
   }
 `
 export const Picture = styled.img`
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;

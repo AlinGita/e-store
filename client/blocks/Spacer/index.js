@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Spacer = styled.div`
   position: relative;
   text-align: center;
-   margin-top: 2rem;
+   margin-top: 3rem;
   margin-bottom: 3rem;
    font-size: 200%;
   font-weight: 300;
