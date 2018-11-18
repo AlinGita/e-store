@@ -77,7 +77,7 @@ class Products extends Component {
     onFilter = e => {
         e.preventDefault();
 
-        const ppp = parseInt(this.state.ppp);
+        const ppp = this.state.ppp;
         if(!ppp || ppp <= 0)
             this.setState({ productsOnPage: 12, ppp: 12 });
         else
@@ -118,7 +118,7 @@ class Products extends Component {
                             <Filters.Section>
                                 <Filters.Section.Header>Products on page</Filters.Section.Header>
                                 <Filters.Section.Body>
-                                    <input type="text" placeholder="From" value={ppp} onChange={this.changeProductsOnPage}/>
+                                    <input type="text" placeholder="Products on page" value={ppp} onChange={this.changeProductsOnPage}/>
                                 </Filters.Section.Body>
                             </Filters.Section>
                             <Filters.Section>

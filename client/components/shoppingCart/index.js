@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeProduct, openShoppingCart, changeProductAmount } from 'actions/shoppingCart';
 import {
     Aside,
@@ -17,6 +18,14 @@ import {
 } from 'containers/Product/styles';
 
 import NumericInput from 'components/NumericInput';
+
+import styled from 'styled-components';
+const PurchaseLink = PurchaseButton.withComponent(Link).extend`
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+`
 
 class ShoppingCart extends Component {
     clickedOutside = e => {
@@ -79,7 +88,7 @@ class ShoppingCart extends Component {
                         </tbody>
                     </Products>
                     <Purchase>
-                        <PurchaseButton>CHECKOUT</PurchaseButton>
+                        <PurchaseLink to="/checkout">CHECKOUT</PurchaseLink>
                         <PurchasePrice>&euro; {products.reduce((accumulator, product) => accumulator + (product.price * product.amount), 0)}</PurchasePrice>
                     </Purchase>
                 </React.Fragment>

@@ -5,6 +5,7 @@ const Pagination = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 3rem;
 `
 Pagination.Item = styled.li`
   padding: .5rem;
