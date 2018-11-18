@@ -7,6 +7,7 @@ import {
 
 
 import About from './containers/About';
+import Checkout from './containers/Checkout';
 import Home from './containers/Home';
 import Contact from './containers/Contact';
 import Product from './containers/Product';
@@ -24,6 +25,7 @@ const Client = () => (
         <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/about" component={About}/>
+            <Route path="/checkout" component={Checkout}/>
             <Route path="/contact" component={Contact}/>
             <Route path="/products/:id" component={Product}/>
             <Route path="/products" component={Products}/>
