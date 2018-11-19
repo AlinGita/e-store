@@ -15,7 +15,8 @@ import {
     sizeController,
     availableProductController,
     paymentController,
-    deliveryController
+    deliveryController,
+    orderController
 } from './controllers';
 
 mongoose.connect('mongodb://127.0.0.1:27017/store', {useNewUrlParser: true});
@@ -39,6 +40,7 @@ app.use('/api/sizes', sizeController);
 app.use('/api/available', availableProductController);
 app.use('/api/payments', paymentController);
 app.use('/api/deliveries', deliveryController);
+app.use('/api/orders', orderController);
 
 
 app.get('*', (req, res) => {
