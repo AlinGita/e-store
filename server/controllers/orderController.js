@@ -33,6 +33,7 @@ router.post(
             const order = new Order({ ...req.body });
             const savedOrder = await orderService.saveOrder(order);
             await Order.populate(savedOrder, { path: 'payment', select: 'url'});
+            await availableProductService.reduceAvailableProducts(savedOrder.products);
             res.status(200).json(savedOrder);
         }
     })
