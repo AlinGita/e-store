@@ -7,6 +7,8 @@ import { Products, Product } from 'components/shoppingCart/styles.js';
 import NumericInput from 'components/NumericInput';
 import { removeProduct, changeProductAmount } from 'actions/shoppingCart';
 import Wrapper from 'blocks/Wrapper';
+import axios from 'axios';
+
 const Delivery = styled.ul`
   list-style-type: none;
 `
@@ -26,16 +28,13 @@ class Checkout extends Component {
         payment: {
             selected: undefined,
             options: {
-                0: { name: 'PayPal', short: 'paypal', price: 1 },
-                1: { name: 'Bank transfer', short: 'bank', price: 1 },
-                2: { name: 'DotPay', short: 'dotpay', price: 1 }
+
             }
         },
         delivery: {
             selected: undefined,
             options: {
-                0: { name: 'Courier DPD', short: 'cdpd', price: 15 },
-                1: { name: 'Post', short: 'post', price: 10 }
+
             }
         },
         address: {
@@ -59,44 +58,85 @@ class Checkout extends Component {
             phone: { key: 'phone', label: 'Phone', value: '' },
         },
         useAddressAsDeliveryAddress: true,
-        canProceedToCheckout: false
-    }
+        canProceedToCheckout: false,
+        isFetching: false,
+        errors: []
+    };
+
+    componentDidMount = async () => {
+        const payments_data = await axios.get('/api/payments');
+        const payments = payments_data.data;
+        const deliveries_data = await axios.get('/api/deliveries');
+        const deliveries = deliveries_data.data;
+        this.setState({
+            payment: { ...this.state.payment, options: _.mapKeys(payments, '_id') },
+            delivery: { ...this.state.delivery, options: _.mapKeys(deliveries, '_id') }
+        })
+    };
+
     componentDidUpdate(prevProps, prevState) {
         const validation = this.validate();
         if(validation !== this.state.canProceedToCheckout)
             this.setState({ canProceedToCheckout: validation })
     }
-    changePayment = index => {
-        this.setState({ payment: { ...this.state.payment, selected: index }} );
-    }
-    changeDelivery = index => {
-        this.setState({ delivery: { ...this.state.delivery, selected: index }} );
-    }
+
+    changePayment = paymentId => {
+        this.setState({ payment: { ...this.state.payment, selected: paymentId }} );
+    };
+
+    changeDelivery = deliveryId => {
+        this.setState({ delivery: { ...this.state.delivery, selected: deliveryId }} );
+    };
+
     onChangeAddress = (field, value) => {
         this.setState({ address: { ...this.state.address, [field]: { ...this.state.address[field], value} }} );
-    }
+    };
+
     onChangeDeliveryAddress = (field, value) => {
         this.setState({ daddress: { ...this.state.daddress, [field]: { ...this.state.daddress[field], value} }} );
-    }
+    };
+
     toggleDeliveryAddress = e => {
         this.setState({ useAddressAsDeliveryAddress: !this.state.useAddressAsDeliveryAddress });
-    }
+    };
+
     validate = () => {
         const { state } = this;
-        if(Object.values(this.props.cart.products).length === 0) return false; // No products
-        if(state.payment.selected === undefined) return false; // No payment method
-        if(state.delivery.selected === undefined) return false; // No delivery
-        if(!this.checkAddress(state.address)) return false; // Bad address
+        if(Object.values(this.props.cart.products).length === 0) return false;
+        if(state.payment.selected === undefined) return false;
+        if(state.delivery.selected === undefined) return false;
+        if(!this.checkAddress(state.address)) return false;
         if(!state.useAddressAsDeliveryAddress &&
-            !this.checkAddress(state.daddress)) return false;  // Bad delivery address
+            !this.checkAddress(state.daddress)) return false;
         return true;
-    }
+    };
+
     checkAddress = address => {
-        return !Object.values(address).some(field => field.value === ''); // Returns true if any field is empty
-    }
-    proceedToCheckout = e => {
-        console.log('Proceeding to checkout');
-    }
+        return !Object.values(address).some(field => field.value === '');
+    };
+
+    proceedToCheckout = async e => {
+        const products = Object.values(this.props.basket.products).map(product => ({
+            product: product._id,
+            size: product.size._id,
+            amount: product.amount
+        }));
+        try {
+            this.setState({ isFetching: true });
+            const response = await axios.post('/api/orders', {
+                products,
+                delivery: this.state.delivery.selected,
+                payment: this.state.payment.selected,
+                client: this.state.address,
+                address: this.state.useAddressAsDeliveryAddress ? this.state.address : this.state.daddress
+            });
+            const data = response.data;
+        } catch (e) {
+            this.setState({ errors: e.response.data })
+        }
+        this.setState({ isFetching: false })
+    };
+
     render() {
         const {
             payment,
@@ -106,13 +146,19 @@ class Checkout extends Component {
             useAddressAsDeliveryAddress,
             canProceedToCheckout
         } = this.state;
+
         const price = {
             products: Object.values(this.props.cart.products).reduce((a, item) => a + (item.price * item.amount), 0),
             payment: payment.selected !== undefined ? payment.options[payment.selected].price : 0,
             delivery: delivery.selected !== undefined ? delivery.options[delivery.selected].price : 0
-        }
+        };
+
+        const errs = this.state.errors.map(error => ({ ...error, notavailable: error.amount > error.available }));
+        const errors = _.mapKeys(errs, 'product');
+
         return (
             <Wrapper>
+                <code><pre>{JSON.stringify(this.state, null, 2)}</pre></code>
                 <Spacer>&#10699;</Spacer>
                 <Products>
                     <thead>
@@ -135,6 +181,11 @@ class Checkout extends Component {
                                 </td>
                                 <td><img src={product.pictures[0]} alt={product.name}/></td>
                                 <td>
+                                    { errors &&
+                                    errors[product._id] &&
+                                    errors[product._id].notavailable === true &&
+                                    <i>Specified amount of this product is currently not available</i>
+                                    }
                                     <span>{product.name} (Size: {product.size.short})</span>
                                     <span>{product.description}</span>
                                 </td>
@@ -149,15 +200,15 @@ class Checkout extends Component {
                 </Products>
                 <Payment>
                     { _.get(payment, 'options', undefined) &&
-                    Object.values(payment.options).map((option, index) => (
-                        <Payment.Item key={index}>
+                    Object.values(payment.options).map(option => (
+                        <Payment.Item key={option._id}>
                             <input
-                                id={option.short}
+                                id={option._id}
                                 type="radio"
                                 radioGroup="payment"
-                                checked={payment.selected === index}
-                                onChange={() => this.changePayment(index)}/>
-                            <label htmlFor={option.short}>{option.name}</label>
+                                checked={payment.selected === option._id}
+                                onChange={() => this.changePayment(option._id)}/>
+                            <label htmlFor={option._id}>{option.name}</label>
                         </Payment.Item>
                     ))
                     }
@@ -166,15 +217,15 @@ class Checkout extends Component {
                 _.get(payment, 'selected', undefined) !== undefined &&
                 <Delivery>
                     {
-                        Object.values(delivery.options).map((option, index) => (
-                            <Delivery.Item key={index}>
+                        Object.values(delivery.options).map(option => (
+                            <Delivery.Item key={option._id}>
                                 <input
-                                    id={option.short}
+                                    id={option._id}
                                     type="radio"
                                     radioGroup="delivery"
-                                    checked={delivery.selected === index}
-                                    onChange={() => this.changeDelivery(index)}/>
-                                <label htmlFor={option.short}>{option.name}</label>
+                                    checked={delivery.selected === option._id}
+                                    onChange={() => this.changeDelivery(option._id)}/>
+                                <label htmlFor={option._id}>{option.name}</label>
                             </Delivery.Item>
                         ))
                     }
@@ -231,10 +282,13 @@ class Checkout extends Component {
                         Total price: { price.products + price.payment + price.delivery }
                     </div>
                 </div>
-                <button onClick={this.proceedToCheckout} disabled={!canProceedToCheckout}>Proceed to checkout</button>
+                <button onClick={this.proceedToCheckout} disabled={!canProceedToCheckout}>
+                    { this.state.isFetching === true ? 'Loading...' : 'Proceed to checkout'}
+                </button>
             </Wrapper>
         )
     }
 }
+
 const mapStateToProps = ({ cart }) => ({ cart });
 export default connect(mapStateToProps, { removeProduct, changeProductAmount })(Checkout);
