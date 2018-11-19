@@ -13,6 +13,7 @@ import Contact from './containers/Contact';
 import Product from './containers/Product';
 import Products from './containers/Products';
 import Dashboard from './containers/Dashboard';
+import Track from './containers/Track';
 
 import Navbar from './components/navbar';
 import Footer from './components/footer';
@@ -29,6 +30,7 @@ const Client = () => (
             <Route path="/contact" component={Contact}/>
             <Route path="/products/:id" component={Product}/>
             <Route path="/products" component={Products}/>
+            <Route path="/track/:id" component={Track}/>
         </Switch>
         <Footer/>
         <ShoppingCart/>
