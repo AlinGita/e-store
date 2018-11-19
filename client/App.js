@@ -14,6 +14,7 @@ import Product from './containers/Product';
 import Products from './containers/Products';
 import Dashboard from './containers/Dashboard';
 import Track from './containers/Track';
+import Payment from './containers/Checkout/Payment';
 
 import Navbar from './components/navbar';
 import Footer from './components/footer';
@@ -26,6 +27,7 @@ const Client = () => (
         <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/about" component={About}/>
+            <Route path="/checkout/payment/:id" component={Payment}/>
             <Route path="/checkout" component={Checkout}/>
             <Route path="/contact" component={Contact}/>
             <Route path="/products/:id" component={Product}/>
