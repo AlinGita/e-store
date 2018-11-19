@@ -131,10 +131,11 @@ class Checkout extends Component {
                 address: this.state.useAddressAsDeliveryAddress ? this.state.address : this.state.daddress
             });
             const data = response.data;
+            this.setState({ isFetching: false });
+            this.props.history.push(`/checkout/payment/${data._id}`)
         } catch (e) {
-            this.setState({ errors: e.response.data })
+            this.setState({ errors: e.response.data, isFetching: false })
         }
-        this.setState({ isFetching: false })
     };
 
     render() {
