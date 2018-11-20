@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import { saltRounds } from '../config';
+
 import Product from '../models/ProductModel';
 import Payment from '../models/PaymentModel';
 import Delivery from '../models/DeliveryModel';
@@ -16,7 +19,8 @@ const Order = new Schema({
     client: { type: Object, required: true },
     address: { type: Object, required: true },
     createdAt: { type: Number, default: Date.now },
-    status: { type: String, required: true, default: 'Transaction Pending' }
+    status: { type: String, required: true, default: 'Transaction Pending' },
+    hash: { type: String, required: true, default: 'hash' }
 });
 
 Order.pre('save', async function(next) {
@@ -39,6 +43,10 @@ Order.pre('save', async function(next) {
         const delivery = await Delivery.findById(this.delivery);
         const deliveryPrice = delivery.price;
         this.price = Number(productsPrice) + Number(paymentPrice) + Number(deliveryPrice);
+
+        const hashed = await bcrypt.hash(`SomerandomString123${Date.now()}`, saltRounds);
+        this.hash = hashed;
+
         next();
     } catch (e) {
         console.log(e);
