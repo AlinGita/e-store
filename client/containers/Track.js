@@ -16,7 +16,7 @@ export default class Track extends Component {
     }
 
     fetchOrder = async () => {
-        const response = await axios.get(`/api/orders/${this.props.match.params.id}`);
+        const response = await axios.get(`/api/orders/${this.props.match.params.id}${this.props.location.search}`);
         const order = response.data;
         this.setState({ order });
     };
