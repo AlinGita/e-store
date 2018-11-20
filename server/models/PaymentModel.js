@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const Payment = new Schema({
     name: { type: String, required: true },
-    icon: { type: String, required: true, default: '/img/payment.png' },
+    icon: { type: String, required: true, default: '/img/payment/placeholder.png' },
     url: { type: String, required: true },
     price: { type: Number, required: true, default: 0 },
     createdAt: { type: Number, default: Date.now },
