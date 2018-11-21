@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Spacer from 'blocks/Spacer';
 import Wrapper from 'blocks/Wrapper';
+import { clearShoppingCart } from 'actions/shoppingCart';
 
 const Heading = styled.h2`
   text-align: center;
@@ -51,6 +53,7 @@ class Payment extends Component {
     };
 
     componentDidMount() {
+        this.props.clearShoppingCart();
         this.fetchOrder();
     }
 
@@ -88,4 +91,4 @@ class Payment extends Component {
     }
 }
 
-export default withRouter(Payment);
+export default withRouter(connect(null, { clearShoppingCart })(Payment));
