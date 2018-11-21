@@ -36,7 +36,7 @@ const Tracker = styled(Link)`
     background: #3250c8;
   }
 `
-const Pay = Tracker.withComponent('a').extend`
+const Pay = styled(Tracker.withComponent('a'))`
   background: #8b00b2;
   margin-right: 0;
   &:hover {

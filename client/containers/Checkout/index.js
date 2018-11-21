@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Spacer from 'blocks/Spacer';
 import Wrapper from 'blocks/Wrapper';
 
-import { removeProduct, changeProductAmount } from 'actions/shoppingCart';
+import { removeProduct, changeProductAmount, openShoppingCart } from 'actions/shoppingCart';
 import { Products, Product } from 'components/shoppingCart/styles.js';
 import NumericInput from 'components/NumericInput';
 
@@ -49,6 +49,7 @@ class Checkout extends Component {
     }
 
     componentDidMount = async () => {
+        this.props.openShoppingCart(false);
         const payments_data = await axios.get('/api/payments')
         const payments = payments_data.data;
         const deliveries_data = await axios.get('/api/deliveries');
@@ -303,4 +304,4 @@ class Checkout extends Component {
 
 const mapStateToProps = ({ cart }) => ({ cart });
 
-export default connect(mapStateToProps, { removeProduct, changeProductAmount })(Checkout);
+export default connect(mapStateToProps, { removeProduct, changeProductAmount, openShoppingCart })(Checkout);
