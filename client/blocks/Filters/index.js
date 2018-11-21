@@ -8,7 +8,7 @@ Filters.Section = styled.div`
     margin-bottom: 1rem;
  `
 Filters.Section.Header = styled.h3`
-    color: #555555;
+    color: rgba(0, 0, 0, .5);
     margin-bottom: .5rem;
  `
 Filters.Section.Body = styled.div`

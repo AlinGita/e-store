@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const ProductInfo = styled.div`
   padding-left: 2rem;
-  color: #555555;
+  color: rgba(0, 0, 0, .5);
   ${media.mobile`
     padding-left: 0;
   `}

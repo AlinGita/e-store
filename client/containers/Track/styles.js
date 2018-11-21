@@ -20,7 +20,7 @@ List.Item = styled.li`
     display: block;
     padding: 0 1rem;
     &:nth-of-type(1) { text-align: right; font-weight: bold; }
-    &:nth-of-type(2) { color: #555555; }
+    &:nth-of-type(2) { color: rgba(0, 0, 0, .5); }
   }
   
   &:not(:last-of-type) {
@@ -30,6 +30,6 @@ List.Item = styled.li`
 export const Section = styled.div`
   margin-bottom: 1rem;
    span {
-    color: #555555;
+    color: rgba(0, 0, 0, .5);
   }
 `
