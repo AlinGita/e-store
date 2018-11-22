@@ -8,22 +8,27 @@ export default class SizeEditor extends Component {
     state = {
         name: this.props.name,
         short: this.props.short
-    }
+    };
+
     static propTypes = {
         name: PropTypes.string,
         short: PropTypes.string,
         onSubmit: PropTypes.func.isRequired
-    }
+    };
+
     changeName = e => {
         this.setState({ name: e.target.value });
-    }
+    };
+
     changeShort = e => {
         this.setState({ short: e.target.value });
-    }
+    };
+
     submit = e => {
         e.preventDefault();
         this.props.onSubmit(this.state.name, this.state.short);
-    }
+    };
+
     render() {
         const { name, short } = this.state;
         return (

@@ -42,14 +42,17 @@ Expander.Body = styled.div`
 export default class extends Component {
     state = {
         expanded: false
-    }
+    };
+
     static propTypes = {
         head: PropTypes.node.isRequired,
         body: PropTypes.node.isRequired
-    }
+    };
+
     toggle = e => {
         this.setState({ expanded: !this.state.expanded });
-    }
+    };
+
     render() {
         const { expanded } = this.state;
         const { head, body } = this.props;
