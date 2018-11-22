@@ -12,6 +12,7 @@ import {
 import { fetchCategories } from 'actions/categoriesActions';
 import AvailabilityEditor from 'components/editors/AvailabilityEditor';
 import ProductEditor from 'components/editors/ProductEditor';
+import ProductsTable from 'components/ProductsTable';
 import Expander from 'components/Expander';
 
 class Products extends Component {
@@ -20,9 +21,11 @@ class Products extends Component {
         this.props.fetchProducts();
         this.props.fetchCategories();
     }
+
     onSubmitProduct = (product) => {
         this.props.updateProduct(product._id, product);
-    }
+    };
+
     onSubmitAvailability = (availability) => {
         const { _id, product, size, amount } = availability;
         if(_id) {
@@ -30,13 +33,15 @@ class Products extends Component {
         } else {
             this.props.createProductAvailability(product, size, amount);
         }
-    }
+    };
+
     deleteProduct = (productId) => {
         this.props.deleteProduct(productId);
-    }
+    };
+
     deleteProductAvailability = (availabilityId, productId) => {
         this.props.deleteProductAvailability(availabilityId, productId);
-    }
+    };
 
     render() {
         const { sizes } = this.props.sizes;
@@ -45,6 +50,10 @@ class Products extends Component {
 
         return (
             <div>
+                <ProductsTable
+                    products={Object.values(products)}
+                    sizes={sizes}
+                    categories={categories}/>
                 <ul>
                     { products &&
                     Object.values(products).map(product => (
