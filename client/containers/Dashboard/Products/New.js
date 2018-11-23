@@ -11,6 +11,7 @@ class ProductsNew extends Component {
     }
 
     onSubmit = product => {
+        delete product._id;
         this.props.createProduct(product);
     };
 

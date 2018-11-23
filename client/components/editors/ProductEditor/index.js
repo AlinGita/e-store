@@ -13,7 +13,8 @@ export default class ProductEditor extends Component {
         features: this.props.features,
         newPicture: '',
         newFeature: ''
-    }
+    };
+
     static propTypes = {
         _id: PropTypes.string.isRequired,
         name: PropTypes.string,
@@ -23,47 +24,54 @@ export default class ProductEditor extends Component {
         pictures: PropTypes.array,
         features: PropTypes.array,
         categories: PropTypes.array.isRequired,
-    }
+    };
+
     static defaultProps = {
-        _id: null,
+        _id: "null",
         name: '',
         description: '',
         price: '',
         category: '',
         pictures: [],
         features: []
-    }
+    };
+
     setProperty = (property, value) => {
         this.setState({ [property]: value });
-    }
+    };
+
     appendArray = (property, value, e) => {
         if(e)
             e.preventDefault();
         const clear = {
             'pictures': () => { this.setState({ newPicture: '' })},
             'features': () => { this.setState({ newFeature: '' })}
-        }
+        };
         clear[property]();
         this.setState({ [property]: [ ...this.state[property], value]});
-    }
+    };
+
     updateArray = (property, index, value) => {
         this.setState({
             [property]: [ ...this.state[property].slice(0, index), value, ...this.state[property].slice(index + 1)]
         })
-    }
+    };
+
     removeFromArray = (property, index, e = null) => {
         if(e)
             e.preventDefault();
         this.setState({
             [property]: [ ...this.state[property].slice(0, index), ...this.state[property].slice(index + 1)]
         })
-    }
+    };
+
     submit = e => {
         e.preventDefault();
         this.props.onSubmit(
             pick(this.state, ['_id', 'name', 'description', 'price', 'category', 'pictures', 'features'])
         );
-    }
+    };
+
     render() {
         const { name, description, price, pictures, features } = this.state;
         const { newPicture, newFeature } = this.state;
@@ -79,8 +87,8 @@ export default class ProductEditor extends Component {
                         { categories &&
                         categories.map(category => {
                             if(category._id === this.state.category)
-                                return <option value={category._id} selected>{category.name}</option>
-                            return <option value={category._id}>{category.name}</option>
+                                return <option key={category._id} value={category._id} selected>{category.name}</option>
+                            return <option key={category._id} value={category._id}>{category.name}</option>
                         })
                         }
                     </select>
