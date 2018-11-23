@@ -13,7 +13,7 @@ const Layout = styled.div`
   grid-row-gap: 1rem;
   margin-bottom: 1rem;
 `
-const Group = Form.extend`
+const Group = styled(Form)`
   background: #fff;
   border: 1px solid rgba(0, 0, 0, .125);
    input,
