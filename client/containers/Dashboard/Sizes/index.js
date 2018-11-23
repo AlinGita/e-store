@@ -14,6 +14,7 @@ import Form from 'blocks/Form';
 import { Cards } from './styles';
 import { Section } from '../styles';
 import styled from 'styled-components';
+
 const NewSize = styled(Form)`
   max-width: 400px;
   padding-bottom: 1rem;

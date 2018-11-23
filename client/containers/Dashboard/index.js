@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import Overview from './Overview';
 import Products from './Products';
 import ProductsNew from './Products/New';
+import ProductsEdit from '../../components/editors/ProductsEditor';
 import Orders from './Orders';
 import Categories from './Categories';
 import Sizes from './Sizes';
@@ -23,6 +24,7 @@ export default class Dashboard extends Component {
                     <Switch>
                         <Route exact path={this.props.match.path} component={Overview}/>
                         <Route path={`${this.props.match.path}/products/new`} component={ProductsNew}/>
+                        <Route path={`${this.props.match.path}/products/edit/:id`} component={ProductsEdit}/>
                         <Route path={`${this.props.match.path}/products`} component={Products}/>
                         <Route path={`${this.props.match.path}/orders`} component={Orders}/>
                         <Route path={`${this.props.match.path}/categories`} component={Categories}/>
