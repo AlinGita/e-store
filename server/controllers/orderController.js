@@ -11,6 +11,8 @@ router.get(
     '/',
     catchExceptions(async (req , res) => {
         const orders = await orderService.getOrders();
+        await Order.populate(orders, { path: 'payment', select: 'name'});
+        await Order.populate(orders, { path: 'delivery', select: 'name'});
         res.status(200).json(orders);
     })
 );
@@ -42,8 +44,28 @@ router.post(
             const savedOrder = await orderService.saveOrder(order);
             await Order.populate(savedOrder, { path: 'payment', select: 'url'});
             await availableProductService.reduceAvailableProducts(savedOrder.products);
+            await Order.populate(savedOrder, { path: 'payment', select: 'name'});
+            await Order.populate(savedOrder, { path: 'delivery', select: 'name'});
             res.status(200).json(savedOrder);
         }
+    })
+);
+
+router.put(
+    '/:id',
+    catchExceptions(async (req, res) => {
+        const order = await orderService.updateOrder(req.params.id, req.body);
+        await Order.populate(order, { path: 'payment', select: 'name'});
+        await Order.populate(order, { path: 'delivery', select: 'name'});
+        res.status(200).json(order);
+    })
+);
+
+router.delete(
+    '/:id',
+    catchExceptions(async (req, res) => {
+        const deleted = await orderService.deleteOrder(req.params.id);
+        res.status(200).json(deleted);
     })
 );
 

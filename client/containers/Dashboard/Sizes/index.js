@@ -11,8 +11,8 @@ import Expander from 'components/Expander';
 
 import Button from 'blocks/Button';
 import Form from 'blocks/Form';
-import { Cards } from './styles';
-import { Section } from '../styles';
+import { Title, Description } from 'blocks/Dashboard';
+import { Cards } from '../styles';
 import styled from 'styled-components';
 
 const NewSize = styled(Form)`
@@ -63,9 +63,9 @@ class Sizes extends Component {
         const { sizes } = this.props.sizes;
 
         return (
-            <Section>
-                <Section.Heading>Sizes</Section.Heading>
-                <Section.Description>Create new sizes and manage existing ones.</Section.Description>
+            <div>
+                <Title>Sizes</Title>
+                <Description>Create new sizes and manage existing ones.</Description>
                 <NewSize>
                     <NewSize.Heading>Createn a new size</NewSize.Heading>
                     <Form.Field>
@@ -104,7 +104,7 @@ class Sizes extends Component {
                         ))
                     }
                 </Cards>
-            </Section>
+            </div>
         )
     }
 }

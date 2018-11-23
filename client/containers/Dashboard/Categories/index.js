@@ -14,8 +14,8 @@ import Expander from 'components/Expander';
 import Button from 'blocks/Button';
 
 import Form from 'blocks/Form';
-import { Cards } from './styles';
-import { Section } from '../styles';
+import { Title, Description } from 'blocks/Dashboard';
+import { Cards } from '../styles';
 import styled from 'styled-components';
 const NewCategory = styled(Form)`
   max-width: 400px;
@@ -68,9 +68,9 @@ class Categories extends Component {
         const {name, description} = this.state;
         const {categories} = this.props.categories;
         return (
-            <Section>
-                <Section.Heading>Categories</Section.Heading>
-                <Section.Description>Create new categories and manage existing ones.</Section.Description>
+            <div>
+                <Title>Categories</Title>
+                <Description>Create new categories and manage existing ones.</Description>
                 <NewCategory>
                     <NewCategory.Heading>Create new category</NewCategory.Heading>
                     <Form.Field>
@@ -109,7 +109,7 @@ class Categories extends Component {
                         ))
                     }
                 </Cards>
-            </Section>
+            </div>
         )
     }
 }
