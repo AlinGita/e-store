@@ -12,6 +12,32 @@ import { fetchCategories } from 'actions/categoriesActions';
 import ProductEditor from '../ProductEditor';
 import AvailabilityEditor from '../AvailabilityEditor';
 import { Title, Description } from 'blocks/Dashboard';
+import Button from 'blocks/Button';
+import styled from 'styled-components';
+
+const Group = styled.div`
+  margin-top: 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .125);
+   h4 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+   & > div {
+    padding: 0 1rem;
+  }
+   input,
+  select {
+    border: 1px solid rgba(0, 0, 0, .125);
+  }
+`
+const Available = styled.div`
+  display: flex;
+  div, form { margin: 0; }
+  & > div { flex-grow: 2; }
+  & > button { margin-left: 1rem; }
+`
+
 
 class ProductsEditor extends Component {
     componentDidMount() {
@@ -66,26 +92,27 @@ class ProductsEditor extends Component {
                     categories={Object.values(categories)}
                     onSubmit={this.onSubmit}
                 />
-                <div>
+                <Group>
+                    <h4>Available sizes</h4>
                     {
                         product.availability.map(availability => (
-                            <div key={availability._id}>
-                                <AvailabilityEditor
+                            <Available key={availability._id}>
+                                <ProductAvailabilityEditor
                                     { ...availability }
                                     product={product._id}
                                     sizes={Object.values(sizes)}
                                     onSubmit={this.submitAvailability}
                                 />
-                                <button onClick={() => this.deleteProductAvailability(availability._id, product._id)}>Delete</button>
-                            </div>
+                                <Button mode="danger" onClick={() => this.deleteProductAvailability(availability._id, product._id)}>Delete</Button>
+                            </Available>
                         ))
                     }
-                    <AvailabilityEditor
+                    <ProductAvailabilityEditor
                         product={product._id}
                         sizes={Object.values(sizes)}
                         onSubmit={this.submitAvailability}
                     />
-                </div>
+                </Group>
             </div>
         )
     }
