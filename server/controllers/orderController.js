@@ -5,10 +5,12 @@ import {
     availableProductService
 } from '../services';
 import { catchExceptions } from '../middleware/exceptions';
+import authenticate from '../middleware/authenticate';
 
 const router = express.Router();
 router.get(
     '/',
+    authenticate,
     catchExceptions(async (req , res) => {
         const orders = await orderService.getOrders();
         await Order.populate(orders, { path: 'payment', select: 'name'});
@@ -53,6 +55,7 @@ router.post(
 
 router.put(
     '/:id',
+    authenticate,
     catchExceptions(async (req, res) => {
         const order = await orderService.updateOrder(req.params.id, req.body);
         await Order.populate(order, { path: 'payment', select: 'name'});
@@ -63,6 +66,7 @@ router.put(
 
 router.delete(
     '/:id',
+    authenticate,
     catchExceptions(async (req, res) => {
         const deleted = await orderService.deleteOrder(req.params.id);
         res.status(200).json(deleted);
