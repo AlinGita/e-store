@@ -89,7 +89,7 @@ class ShoppingCart extends Component {
                     </Products>
                     <Purchase>
                         <PurchaseLink to="/checkout">CHECKOUT</PurchaseLink>
-                        <PurchasePrice>&euro; {products.reduce((accumulator, product) => accumulator + (product.price * product.amount), 0)}</PurchasePrice>
+                        <PurchasePrice>&euro; {Math.round(products.reduce((accumulator, product) => accumulator + (product.price * product.amount), 0) * 1e12) / 1e12}</PurchasePrice>
                     </Purchase>
                 </React.Fragment>
                 }

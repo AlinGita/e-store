@@ -28,7 +28,7 @@ Order.pre('save', async function(next) {
         const productsIds = this.products.map(product => product.product);
         const products = await Product.find({_id: {$in: productsIds}});
 
-        const productsPrice = this.products.reduce((acc, product) => {
+        const productsPrice = Math.round(this.products.reduce((acc, product) => {
             const pr = products.find(item => {
                 const itemid = mongoose.Types.ObjectId(item._id);
                 const prodid = mongoose.Types.ObjectId(product.product);
@@ -36,13 +36,13 @@ Order.pre('save', async function(next) {
             });
             const productPrice = pr ? pr.price : 0;
             return acc + (product.amount * productPrice);
-        }, 0);
+        }, 0) * 1e12) / 1e12;
 
         const payment = await Payment.findById(this.payment);
         const paymentPrice = payment.price;
         const delivery = await Delivery.findById(this.delivery);
         const deliveryPrice = delivery.price;
-        this.price = Number(productsPrice) + Number(paymentPrice) + Number(deliveryPrice);
+        this.price = Math.round((Number(productsPrice) + Number(paymentPrice) + Number(deliveryPrice)) * 1e12) / 1e12;
 
         const hashed = await bcrypt.hash(`SomerandomString123${Date.now()}`, saltRounds);
         this.hash = hashed;
