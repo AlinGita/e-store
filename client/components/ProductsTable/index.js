@@ -37,6 +37,7 @@ export default class ProductsTable extends Component {
                 <Table.Body>
                     {
                         products.map(product => (
+
                             <tr key={product._id}>
                                 <td><img src={product.pictures[0]} alt={product.name}/></td>
                                 <td>
@@ -55,6 +56,7 @@ export default class ProductsTable extends Component {
                                         Object.values(pick(sizes, product.availability.map(item => item.size)))
                                             .map(size => size.short)
                                             .join(', ')
+
                                     }
                                 </td>
                                 <td>&euro; {product.price}</td>
