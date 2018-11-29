@@ -80,7 +80,7 @@ class Sizes extends Component {
                             <Form.Input type="text" placeholder="Short" value={short} onChange={this.changeShort}/>
                         </Form.Label>
                     </Form.Field>
-                    <Button type="submit" onClick={this.submitSize}>Submit</Button>
+                    <Button mode="secondary" type="submit" onClick={this.submitSize}>Submit</Button>
                 </NewSize>
                 <Cards>
                     {

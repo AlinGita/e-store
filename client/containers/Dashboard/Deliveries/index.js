@@ -109,7 +109,7 @@ export default class Deliveries extends Component {
                             <Form.Input type="text" placeholder="Delivery icon" value={deliveryIcon} onChange={this.changeDeliveryIcon}/>
                         </Form.Label>
                     </Form.Field>
-                    <Button mode="primary" onClick={this.submit}>Submit</Button>
+                    <Button mode="secondary" onClick={this.submit}>Submit</Button>
                 </NewDelivery>
                 <Cards>
                     { deliveries &&

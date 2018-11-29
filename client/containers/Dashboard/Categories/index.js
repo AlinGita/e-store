@@ -17,6 +17,7 @@ import Form from 'blocks/Form';
 import { Title, Description } from 'blocks/Dashboard';
 import { Cards } from '../styles';
 import styled from 'styled-components';
+
 const NewCategory = styled(Form)`
   max-width: 400px;
   padding-bottom: 1rem;
@@ -85,7 +86,7 @@ class Categories extends Component {
                             <Form.Input type="text" placeholder="Description" value={description} onChange={this.changeDescription}/>
                         </Form.Label>
                     </Form.Field>
-                    <Button type="submit" onClick={this.submitCategory}>Submit</Button>
+                    <Button mode="secondary" type="submit" onClick={this.submitCategory}>Submit</Button>
                 </NewCategory>
                 <Cards>
                     {

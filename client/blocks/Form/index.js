@@ -23,7 +23,7 @@ Form.Label = styled.label`
   flex-direction: column;
 `
 Form.Input = styled.input`
-  width: 100%;
+  width: 95%;
   font-size: 1em;
   padding: .5rem;
   border: 0;
