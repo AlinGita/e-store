@@ -20,9 +20,9 @@ export const ProductItem = styled.li`
   position: relative;
   width: 100%;
 `
+
 export const Figure = styled.figure`
   height: 100%; 
-  width: 100%;
    &:hover figcaption {
     opacity: 1;
   }
