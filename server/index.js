@@ -34,6 +34,13 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+//UNCOMMENT CODE BELOW TO CREATE ADMIN USER IN DATABASE FOR TESTING PURPOSES
+// import User from './models/UserModel';
+// const usr = new User({ username: 'admin', password: 'admin' });
+// usr.save((err, user) => {
+//   console.log('saved user: ', user);
+// });
+
 app.use('/api/auth', authenticationController);
 app.use('/api/products', productController);
 app.use('/api/categories', categoryController);

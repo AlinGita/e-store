@@ -23,7 +23,7 @@ export default class PicturePreview extends Component {
                     { pictures &&
                     pictures.map((picture, index) => (
                         <li key={index} onClick={() => this.changeCurrent(index)}>
-                            <PictureListItem src={picture}/>
+
                         </li>
                     ))
                     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { fetchSizes } from 'actions/sizesActions';
 import { fetchProducts, deleteProduct } from 'actions/productsActions';
@@ -11,7 +12,7 @@ import Button from 'blocks/Button';
 
 import { Title, Description } from 'blocks/Dashboard';
 
-const NewProductLink = Button.withComponent(Link).extend`
+const NewProductLink = styled(Button.withComponent(Link))`
   font-size: 1rem;
   float: right;
   text-decoration: none;

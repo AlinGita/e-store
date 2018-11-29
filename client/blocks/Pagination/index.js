@@ -6,13 +6,14 @@ const Pagination = styled.ul`
   justify-content: center;
   align-items: center;
   margin-top: 3rem;
+  padding: 0;
 `
 Pagination.Item = styled.li`
   padding: .5rem;
   border: 1px solid rgba(0, 0, 0, .125);
   border-radius: 3px;
    opacity: ${props => props.disabled ? 0.8 : 1};
-  color: ${props => props.disabled ? 'rgba(0, 0, 0, .125)' : '#1a1a1a'};
+  color: ${props => props.disabled ? 'rgba(0, 0, 0, .75)' : '#1a1a1a'};
   font-weight: ${props => props.disabled ? 'bold' : 400};
    &:not(:last-of-type) {
     margin-right: .5rem;

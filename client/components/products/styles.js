@@ -9,6 +9,7 @@ export const Products = styled.ul`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-column-gap: 2rem;
   grid-row-gap: 2rem;
+  padding: 0;
   
   ${media.mobile`
 
@@ -16,7 +17,6 @@ export const Products = styled.ul`
   `}
 `
 export const ProductItem = styled.li`
-  height: 400px;
   position: relative;
   width: 100%;
 `
