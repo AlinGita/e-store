@@ -1,6 +1,6 @@
 ## Description
-![alt text](https://i.imgur.com/Il3VsDI.jpg "Home Page")
-This is a simple cloths e-store website. From the dashboard site's admin is able to manage all needed data such as:
+
+This is a simple cloths e-store website. From the dashboard(admin's panel) site's admin is able to manage all needed data such as:
 * product category
 * product size
 * change availability of product in certain sizes
@@ -8,7 +8,7 @@ This is a simple cloths e-store website. From the dashboard site's admin is able
 * payment method
 * browse all orders, change order status, cancel order
 
-![alt text](https://i.imgur.com/pXTqvrs.png "Dashboard page")
+
 
 ## Getting Started
 
